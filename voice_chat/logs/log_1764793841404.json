@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-12-03 15:30:41",
+  "user_text": "28 minus 6 equals.",
+  "raw_llm_output": "{\n  \"function\": \"calculate\",\n  \"arguments\": {\n    \"expression\": \"28 - 6\"\n  }\n}",
+  "function_output": 22,
+  "bot_response": "Let me calculate that for you... The answer is twenty-two."
+}

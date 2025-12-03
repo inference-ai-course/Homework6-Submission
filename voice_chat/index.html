@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Chat Application</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="chat-header">
+            <h1>🎤 Voice Chat</h1>
+            <p>Talk to your AI assistant</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">Hello! I'm your AI assistant. Click the microphone button to start recording your message.</div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="recording-status" id="recordingStatus">
+                <span id="statusText">Ready</span>
+                <div class="recording-indicator" id="recordingIndicator"></div>
+            </div>
+
+            <div class="button-group">
+                <button id="recordButton" class="btn btn-primary btn-large" onclick="toggleRecording()">
+                    <span class="mic-icon">🎤</span>
+                    <span id="recordButtonText">Start Recording</span>
+                </button>
+                <button id="sendButton" class="btn btn-secondary" onclick="sendAudio()" disabled>
+                    <span class="send-icon">📤</span> Send
+                </button>
+            </div>
+
+            <div class="transcription-display" id="transcriptionDisplay">
+                <div id="transcriptionText"></div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-small" onclick="clearChat()" title="Clear chat history">Clear Chat</button>
+                <button class="btn btn-small" onclick="toggleMicrophone()" id="muteButton" title="Mute/Unmute">
+                    🔊 Unmute
+                </button>
+            </div>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="loader-spinner"></div>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

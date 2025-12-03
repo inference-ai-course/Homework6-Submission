@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-12-03 15:31:03",
+  "user_text": "Search papers for machine learning.",
+  "raw_llm_output": "{\n  \"function\": \"search_arxiv\",\n  \"arguments\": {\n    \"query\": \"machine learning\"\n  }\n}",
+  "function_output": "[arXiv snippet related to 'machine learning']",
+  "bot_response": "Searching academic papers for you... The result is [arXiv snippet related to 'machine learning']."
+}
