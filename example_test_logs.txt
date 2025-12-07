@@ -1,0 +1,20 @@
+User:  Tell me about lead's binding energy.
+function=Function(name='search_arxiv', arguments={'arguments': {'query': 'lead binding energy nuclear binding energy per nucleon'}, 'f
+unction': 'search_arxiv'})
+Function call made to:  search_arxiv
+Function output: [arXiv snippet related to 'lead binding energy nuclear binding energy per nucleon']
+Output:  [arXiv snippet related to 'lead binding energy nuclear binding energy per nucleon']
+
+User:  What's 2 to the power of 10?
+function=Function(name='calculate', arguments={'arguments': {'expression': '2^10'}, 'function': 'calculate'})
+Function call made to:  calculate
+Function output: 1024
+Output:  1024
+
+User:  How are scissors made?
+LLM output: Scissors are made by forging or casting two steel blades that are heated and shaped, then hardened and tempered, have a pi
+vot hole drilled and a metal pin inserted, the blades are polished and fitted together, and rubber or plastic handles are molded or gl
+ued onto the pin for comfortable use.
+Output:  Scissors are made by forging or casting two steel blades that are heated and shaped, then hardened and tempered, have a pivot
+ hole drilled and a metal pin inserted, the blades are polished and fitted together, and rubber or plastic handles are molded or glued
+ onto the pin for comfortable use.
