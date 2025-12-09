@@ -1,0 +1,76 @@
+2025-12-09 01:01:06,937 - main - INFO - Processing voice chat request for session: 9752de4d-f356-4ba1-a97d-7ad22a4b493c
+2025-12-09 01:01:06,939 - main - INFO - Audio saved to: ./uploads/a7686739-7b1c-4bf0-a09d-4a06a752ff63.wav
+2025-12-09 01:01:06,940 - main - INFO - Transcribing audio...
+2025-12-09 01:01:06,940 - services.whisper_service - INFO - Transcribing audio file: ./uploads/a7686739-7b1c-4bf0-a09d-4a06a752ff63.wav
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/whisper/transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+2025-12-09 01:01:07,025 - watchfiles.main - INFO - 1 change detected
+2025-12-09 01:01:07,534 - services.whisper_service - INFO - Transcription completed:  Can you help me to calculate 2 plus 2?...
+2025-12-09 01:01:07,534 - main - INFO - Transcription: Can you help me to calculate 2 plus 2?
+2025-12-09 01:01:07,534 - services.state_manager - INFO - Created session: {'conversation_history': [], 'created_at': datetime.datetime(2025, 12, 9, 1, 1, 7, 534514), 'last_activity': datetime.datetime(2025, 12, 9, 1, 1, 7, 534516)}
+2025-12-09 01:01:07,534 - main - INFO - Generating response...
+2025-12-09 01:01:07,535 - services.llama_service - INFO - Generating response for: Can you help me to calculate 2 plus 2?...
+2025-12-09 01:01:08,711 - watchfiles.main - INFO - 1 change detected
+2025-12-09 01:01:12,225 - services.llama_service - INFO - Generated response: I'd be happy to help with simple calculations. Her...
+2025-12-09 01:01:12,225 - main - INFO - Processing for function calls...
+2025-12-09 01:01:12,226 - services.function_call_handler - INFO - Detected function call: {'function': 'calculate', 'arguments': {'expression': '2+2'}}
+2025-12-09 01:01:12,226 - services.tool_functions - INFO - Calculating expression: 2+2
+2025-12-09 01:01:12,227 - services.function_call_handler - INFO - Function result: The result of 2+2 is 4
+2025-12-09 01:01:12,227 - main - INFO - Function call executed, result: The result of 2+2 is 4
+2025-12-09 01:01:12,227 - main - INFO - Final response: The result of 2+2 is 4
+2025-12-09 01:01:12,227 - main - INFO - Synthesizing speech...
+2025-12-09 01:01:12,227 - services.speecht5_service - INFO - Synthesizing speech for: The result of 2+2 is 4...
+2025-12-09 01:01:13,575 - services.speecht5_service - INFO - Audio saved to: ./uploads/1f7968eb-174e-47f9-be4a-7a55d2ed032c_response.wav
+2025-12-09 01:01:13,575 - services.speecht5_service - INFO - Speech synthesis completed
+INFO:     127.0.0.1:56603 - "POST /api/voice-chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56603 - "GET /api/audio/1f7968eb-174e-47f9-be4a-7a55d2ed032c_response.wav HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:56603 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2025-12-09 01:01:13,690 - watchfiles.main - INFO - 3 changes detected
+2025-12-09 01:01:15,738 - watchfiles.main - INFO - 1 change detected
+2025-12-09 01:01:24,002 - main - INFO - Processing voice chat request for session: 9752de4d-f356-4ba1-a97d-7ad22a4b493c
+2025-12-09 01:01:24,005 - main - INFO - Audio saved to: ./uploads/75eb8ccb-45dd-4a79-a1f6-ea042b530678.wav
+2025-12-09 01:01:24,005 - main - INFO - Transcribing audio...
+2025-12-09 01:01:24,005 - services.whisper_service - INFO - Transcribing audio file: ./uploads/75eb8ccb-45dd-4a79-a1f6-ea042b530678.wav
+/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/whisper/transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead
+  warnings.warn("FP16 is not supported on CPU; using FP32 instead")
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+2025-12-09 01:01:24,115 - watchfiles.main - INFO - 1 change detected
+2025-12-09 01:01:24,677 - services.whisper_service - INFO - Transcription completed:  Can you help me to search academic paper on AI re...
+2025-12-09 01:01:24,677 - main - INFO - Transcription: Can you help me to search academic paper on AI research?
+2025-12-09 01:01:24,677 - main - INFO - Generating response...
+2025-12-09 01:01:24,678 - services.llama_service - INFO - Generating response for: Can you help me to search academic paper on AI res...
+2025-12-09 01:01:25,320 - watchfiles.main - INFO - 1 change detected
+2025-12-09 01:01:29,348 - services.llama_service - INFO - Generated response: I can suggest some academic papers on AI research....
+2025-12-09 01:01:29,348 - main - INFO - Processing for function calls...
+2025-12-09 01:01:29,348 - services.function_call_handler - INFO - Detected function call: {'function': 'search_arxiv', 'arguments': {'query': 'AI research'}}
+2025-12-09 01:01:29,348 - services.tool_functions - INFO - Searching arXiv for query: AI research
+2025-12-09 01:01:29,361 - arxiv - INFO - Requesting page (first: True, try: 0): https://export.arxiv.org/api/query?search_query=AI+research&id_list=&sortBy=relevance&sortOrder=descending&start=0&max_results=100
+2025-12-09 01:01:30,664 - arxiv - INFO - Got first page: 100 of 222479 total results
+2025-12-09 01:01:30,666 - services.function_call_handler - INFO - Function result: Title: Foundations of GenIR
+Authors: Qingyao Ai, Jingtao Zhan, Yiqun Liu
+Published: 2025-01-06
+Summary: The chapter discusses the foundational impact of modern generative AI models on information access (IA) systems. In contrast to traditional AI, the large-scale training and superior data modeling of generative AI models enable them to produce high-quality, human-like responses, which brings brand ne...
+2025-12-09 01:01:30,666 - main - INFO - Function call executed, result: Title: Foundations of GenIR
+Authors: Qingyao Ai, Jingtao Zhan, Yiqun Liu
+Published: 2025-01-06
+Summary: The chapter discusses the foundational impact of modern generative AI models on information access (IA) systems. In contrast to traditional AI, the large-scale training and superior data modeling of generative AI models enable them to produce high-quality, human-like responses, which brings brand ne...
+2025-12-09 01:01:30,666 - main - INFO - Final response: Title: Foundations of GenIR
+Authors: Qingyao Ai, Jingtao Zhan, Yiqun Liu
+Published: 2025-01-06
+Summary: The chapter discusses the foundational impact of modern generative AI models on information access (IA) systems. In contrast to traditional AI, the large-scale training and superior data modeling of generative AI models enable them to produce high-quality, human-like responses, which brings brand ne...
+2025-12-09 01:01:30,666 - main - INFO - Synthesizing speech...
+2025-12-09 01:01:30,666 - services.speecht5_service - INFO - Synthesizing speech for: Title: Foundations of GenIR
+Authors: Qingyao Ai, J...
+2025-12-09 01:01:46,282 - services.speecht5_service - INFO - Audio saved to: ./uploads/7e14931c-374f-4f89-841d-8e9799848fc0_response.wav
+2025-12-09 01:01:46,283 - services.speecht5_service - INFO - Speech synthesis completed
+INFO:     127.0.0.1:56627 - "POST /api/voice-chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56627 - "GET /api/audio/7e14931c-374f-4f89-841d-8e9799848fc0_response.wav HTTP/1.1" 206 Partial Content
+2025-12-09 01:01:46,399 - watchfiles.main - INFO - 2 changes detected
+2025-12-09 01:01:48,514 - watchfiles.main - INFO - 1 change detected
