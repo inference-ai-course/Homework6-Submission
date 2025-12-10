@@ -1,63 +1,67 @@
 import torch
 from transformers import pipeline, AutoTokenizer
 import json
+import re
 
 conversation_history = []
+model_name = "meta-llama/Llama-3.1-8B-Instruct"
+# Initialize tokenizer for chat template
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 llm = pipeline(
     "text-generation", 
-    model="meta-llama/Llama-3.1-8B",
+    model=model_name,
     model_kwargs={"dtype": torch.bfloat16}, 
-    device_map="auto"
+    device_map="auto",
+    tokenizer=tokenizer
 )
 
-# Get the tokenizer for chat template formatting
-tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B")
+# System prompt instructing the model about function calls
+SYSTEM_PROMPT = """You are a helpful research assistant. You can answer questions directly or use function calls when appropriate.
+
+You have access to two functions:
+1. `calculate(expression)` - For mathematical calculations. Use this when the user asks you to compute, calculate, or solve a math problem.
+2. `search_arxiv(query)` - For searching research papers on arXiv. Use this when the user asks about research topics, papers, or scientific information.
+
+When you need to call a function, output ONLY a valid JSON object in this exact format:
+{"function": "function_name", "arguments": {"argument_name": "argument_value"}}
+
+Examples:
+- For math: {"function": "calculate", "arguments": {"expression": "2+2"}}
+- For research: {"function": "search_arxiv", "arguments": {"query": "quantum entanglement"}}
+
+If the user's question can be answered directly without needing a function call, respond normally in plain text.
+
+IMPORTANT: Output ONLY the JSON object (no markdown, no code blocks, no explanation) when making a function call. For normal responses, output plain text."""
 
 def generate_response(user_text):
-    # System prompt instructing the model about function calling
-    system_prompt = """You are a helpful AI assistant. You can respond to users in two ways:
-
-1. **Function Calls**: If the user's question can be answered by:
-   - Performing a mathematical calculation (e.g., "what is 2+2?", "calculate 15*7")
-   - Searching arXiv for research papers (e.g., "search for papers on quantum entanglement", "find arXiv papers about machine learning")
-
-   Then you MUST output ONLY a JSON object in this exact format:
-   {"function": "calculate", "arguments": {"expression": "2+2"}}
-   or
-   {"function": "search_arxiv", "arguments": {"query": "quantum entanglement"}}
-
-2. **Normal Text Response**: For all other questions, respond normally with helpful text.
-
-Important: 
-- Output ONLY the JSON object for function calls, no additional text
-- For normal responses, output plain text as usual
-- Be concise and direct"""
-    
-    # Add user message to history (chat template expects "content" not "text")
+    # Add user message to history
     conversation_history.append({"role": "user", "content": user_text})
     
-    # Build messages with system prompt
-    messages = [{"role": "system", "content": system_prompt}] + conversation_history
+    # Prepare messages with system prompt (only add system prompt once at the start)
+    messages = []
+    if len(conversation_history) == 1:  # First user message
+        messages.append({"role": "system", "content": SYSTEM_PROMPT})
+    messages.extend(conversation_history)
     
-    # Apply chat template to format messages correctly
-    formatted_prompt = tokenizer.apply_chat_template(
+    # Apply chat template
+    prompt = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
         add_generation_prompt=True
     )
     
-    # Generate response using the formatted prompt
+    # Generate response with temperature=0 for deterministic output
     outputs = llm(
-        formatted_prompt,
+        prompt,
         max_new_tokens=200,
         return_full_text=False,
-        temperature=0.7,
-        do_sample=True
+        temperature=0,
+        do_sample=False
     )
     bot_response = outputs[0]["generated_text"].strip()
     
-    # Route the output to handle function calls if needed
+    # Route the output to handle function calls
     final_response = route_llm_output(bot_response)
     
     # Add assistant response to history (store the raw response, not the routed one)
@@ -83,13 +87,43 @@ def route_llm_output(llm_output: str) -> str:
     """
     Route LLM response to the correct tool if it's a function call, else return the text.
     Expects LLM output in JSON format like {'function': ..., 'arguments': {...}}.
+    Handles cases where JSON might be embedded in text or have markdown formatting.
     """
+    # Try to extract JSON from the output (handle markdown code blocks, etc.)
+    text = llm_output.strip()
+    
+    # Remove markdown code blocks if present
+    if text.startswith("```json"):
+        text = text[7:]  # Remove ```json
+    elif text.startswith("```"):
+        text = text[3:]  # Remove ```
+    if text.endswith("```"):
+        text = text[:-3]  # Remove closing ```
+    text = text.strip()
+    
+    # Try to find JSON object in the text
     try:
-        output = json.loads(llm_output)
-        func_name = output.get("function")
-        args = output.get("arguments", {})
-    except (json.JSONDecodeError, TypeError):
-        # Not a JSON function call; return the text directly
+        # First, try parsing the entire text
+        output = json.loads(text)
+    except json.JSONDecodeError:
+        # If that fails, try to extract JSON object from the text
+        json_match = re.search(r'\{[^{}]*"function"[^{}]*\}', text)
+        if json_match:
+            try:
+                output = json.loads(json_match.group())
+            except json.JSONDecodeError:
+                # Not a JSON function call; return the text directly
+                return llm_output
+        else:
+            # Not a JSON function call; return the text directly
+            return llm_output
+    
+    # Extract function name and arguments
+    func_name = output.get("function")
+    args = output.get("arguments", {})
+    
+    if not func_name:
+        # Invalid JSON structure; return the text directly
         return llm_output
 
     if func_name == "search_arxiv":
