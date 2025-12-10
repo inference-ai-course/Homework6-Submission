@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  voice-assistant:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=True
+      - WHISPER_MODEL=base
+      - LLAMA_MODEL_PATH=meta-llama/Llama-3.2-1B-Instruct
+      - SPEECHT5_MODEL_PATH=microsoft/speecht5_tts
+      - AUDIO_UPLOAD_DIR=/app/uploads
+      - MAX_AUDIO_SIZE_MB=10
+      - MAX_CONVERSATION_HISTORY=10
+      - SESSION_TIMEOUT_MINUTES=30
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+      - model-cache:/root/.cache
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+
+volumes:
+  model-cache:
+    driver: local
