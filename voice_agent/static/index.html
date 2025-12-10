@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Agent with Function Calling</title>
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎤 Voice Agent with Function Calling</h1>
+        
+        <div class="upload-section">
+            <div class="file-input-wrapper">
+                <h2>Question</h2>
+                <input type="file" id="audioFile" accept="audio/*">
+                <label for="audioFile" class="file-input-label">
+                    📁 Choose Audio File
+                </label>
+                <div class="file-name" id="fileName">No file selected</div>
+            </div>
+            
+            <audio id="questionPlayer" controls autoplay style="display: none;"></audio>
+            
+            <button class="submit-btn" id="submitBtn" disabled>Submit Question</button>
+        </div>
+
+        <div class="answer-section">
+            <h2>Answer</h2>
+            <audio id="answerPlayer" controls autoplay style="display: none;"></audio>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <div class="history-panel" id="historyPanel" style="display: none; margin-left: 20px;"></div>     
+
+    <script src="static/script/myscript.js"></script>
+
+</body>
+</html>
