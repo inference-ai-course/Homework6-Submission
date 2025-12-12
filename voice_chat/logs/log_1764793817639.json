@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-12-03 15:30:17",
+  "user_text": "Hello, how are you today?",
+  "raw_llm_output": "I'm functioning within normal parameters.",
+  "function_output": null,
+  "bot_response": "I'm functioning within normal parameters."
+}
